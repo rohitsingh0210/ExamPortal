@@ -93,8 +93,8 @@
     function showTimeRemaining(testDuration){
       setInterval(function(){
         
-        let hour = Math.floor(testDuration/3600000)
-        let minutes = Math.floor((testDuration - hour*3600000)/60000)
+        let hour = Math.floor(testDuration/3600000) 
+        let minutes = Math.floor((testDuration - hour*3600000)/60000) 
         let seconds = Math.floor((testDuration - hour*3600000 - minutes*60000)/1000)
         if(hour==0 && minutes==0 && seconds==0){
           end()
@@ -115,8 +115,6 @@
       questions = allQuestions
     }
     let index = 0;
-    // console.log(questions)
-    // console.log(allQuestions)
     function showQuestion(index) {
       document.getElementById("questionNumber").innerText = `Question ${index + 1}`;
       document.getElementById("question").innerText = questions[index].question;
@@ -124,9 +122,6 @@
       document.getElementById("optionB").innerText = questions[index].optionB;
       document.getElementById("optionC").innerText = questions[index].optionC;
       document.getElementById("optionD").innerText = questions[index].optionD;
-      // document.getElementsByClassName('btn-warning').array.forEach(element => {
-      //   element.classlist.remove('btn-warning');
-      // });
     }
     // next button
     document.getElementById('next').addEventListener('click', () => {
@@ -159,10 +154,6 @@
           marks++;
         }
       }
-      console.log(marks)
-      for (const iterator of savedAnswers) {
-        console.log(iterator)
-      }
       let data = {
         studentId: sessionStorage.getItem("studentId"),
         testName: "<%- testName%>",
@@ -178,20 +169,7 @@
         .then(text => text)
         .catch(err => console.log(err))
 
-      history.back().then(()=>{
-        fetch("http://127.0.0.1:80/student", {
-          method: 'POST',
-          headers: { "Content-type": "application/json;charset=UTF-8" },
-          body: JSON.stringify({
-            studentId: sessionStorage.getItem("studentId"),
-            password: sessionStorage.getItem("password")
-          })
-        })        
-        .then(response => response.text)
-        .then(text => text)
-        .catch(err => console.log(err))
-        // location.reload()
-      })
+      history.back();
     }
     document.getElementById('end').addEventListener('click', end)
   </script>

@@ -5,19 +5,7 @@ document.getElementById('logoutBtn').addEventListener('click', ()=>{
     sessionStorage.removeItem("department");
 })
 
-function che(a,b){
-    console.log("clicked")
-    if(a+b==2){
-        return true
-    }else{
-        return false
-    }
-}
 function checkTest(dateTime, duration){
-    console.log(dateTime)
-    console.log(duration)
-    console.log((new Date(dateTime)-(new Date() - new Date(duration*60000))) )
-    console.log((new Date(test.dateTime)-(new Date())))
     if((new Date(dateTime)>(new Date() - new Date(duration*60000))) && (new Date(dateTime)<(new Date()))){
         console.log('start')
         return true

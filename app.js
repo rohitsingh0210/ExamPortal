@@ -96,11 +96,7 @@ app.get('/student', (req, res)=>{
 })
 app.post('/admin', (req, res)=>{
     isAdminLoggedIn = true;
-    console.log("admin post",req.body);
     const password = "password";
-    for (const [key, value] of Object.entries(req.body)) {
-        console.log(`${key}: ${value}`);
-      }
     if(req.body.adminPassword == password){
         res.status(200).render('admin', {alert:false})
     }else{
@@ -144,7 +140,6 @@ app.post('/student', (req, res)=>{
                         alert: false
                     }; //to be extracted from db
                     res.status(200).render('student',params);
-                    console.log(params)
                 },1000)
             })
         }
@@ -154,25 +149,15 @@ app.post('/student', (req, res)=>{
     })
 })
 app.post('/newQuestion', (req, res)=>{
-    for (const [key, value] of Object.entries(req.body)) {
-        console.log(`${key}: ${value}`);
-    } 
     let question = new Question(req.body);
     question.save().then(()=>{
         console.log("Question added to database");
     }).catch(()=>{
         console.log("Some error occured");
     })
-    console.log("Student added");
-    console.log("New test created");
     res.redirect('./admin');
-    // res.status(200).sendFile(path.join(__dirname, '/views/admin.html'));
 })
 app.post('/addStudent', (req, res)=>{
-    console.log("Student added");   
-    for (const [key, value] of Object.entries(req.body)) {
-        console.log(`${key}: ${value}`);
-    } 
     let student = new Student(req.body);
     student.save().then(()=>{
         Test.find({department:req.body.department},{_id:0, __v:0}, (error, tests)=>{
@@ -191,9 +176,7 @@ app.post('/addStudent', (req, res)=>{
         console.log("Some error occured");
 
     })
-    console.log("Student added");
     res.redirect('./admin');
-    // res.status(200).sendFile(path.join(__dirname, '/views/admin.html'));
 })
 app.post('/scheduleTest', (req, res)=>{
     Question.find({testName : req.body.testName},(error, questions)=>{
@@ -218,7 +201,6 @@ app.post('/scheduleTest', (req, res)=>{
                 });
             })
             res.status(200).render('admin', {alert:false})
-            // res.redirect('./admin');
         }
         else{
             res.status(200).render('admin', {alert:true})
@@ -227,32 +209,21 @@ app.post('/scheduleTest', (req, res)=>{
 })
 
 app.get('/test', (req, res)=>{
-    console.log("test get")
-    console.log(req.query);
     let query = {
         testName: req.query.testName, 
         department: req.query.department
     }
     Question.find(query, {_id:0, __v:0}, (error, questions)=>{
-        console.log(questions[0].testName)
         res.status(200).render('test', {testName: req.query.testName, questions: questions, testDuration: req.query.testDuration, alert:false})
     })
 })
 
 app.post('/updateMarks', (req, res)=>{
-    // let score = new Score(req.body);
-    // score.save().then(()=>{
-    //     console.log("Score added to database");
-    // }).catch(()=>{
-    //     console.log("Some error occured");
-    // })
     let query = {
         studentId: req.body.studentId,
         testName: req.body.testName,
         department: req.body.department
     }
-    console.log("update")
-    console.log(req.body)
     Score.findOneAndUpdate(query, {$set: {marks: req.body.marks}}, {new: true, useFindAndModify: false}, (err, doc)=>{
         if (err) {
             console.log("update document error");
