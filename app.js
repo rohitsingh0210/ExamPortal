@@ -2,9 +2,10 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require("mongoose");
+require('dotenv').config()
 // const studentModule = require('./static/js/student')
 const port = 80;
-const hostname = '127.0.0.1'
+const hostname = '127.80.0.1'
 
 const app = express();
 app.use('/static', express.static('static'));
@@ -16,7 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 // database connection
-mongoose.connect('mongodb://127.0.0.1:27017/examPortal', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 
 // student schema and model
@@ -96,7 +97,7 @@ app.get('/student', (req, res)=>{
 })
 app.post('/admin', (req, res)=>{
     isAdminLoggedIn = true;
-    const password = "password";
+    const password = process.env.ADMIN_PASSWORD;
     if(req.body.adminPassword == password){
         res.status(200).render('admin', {alert:false})
     }else{
@@ -188,8 +189,8 @@ app.post('/scheduleTest', (req, res)=>{
                 console.log("Some error occured");
             })
             Student.find({department:req.body.department}, {_id:0},(error, students)=>{
-                console.log(students.length);
-                console.log(students);
+                // console.log(students.length);
+                // console.log(students);
                 Array.from(students).forEach(student => {
                     let score = new Score({
                         studentId: student.studentId,
@@ -219,6 +220,7 @@ app.get('/test', (req, res)=>{
 })
 
 app.post('/updateMarks', (req, res)=>{
+    console.log("in here");
     let query = {
         studentId: req.body.studentId,
         testName: req.body.testName,
@@ -229,7 +231,7 @@ app.post('/updateMarks', (req, res)=>{
             console.log("update document error");
         } else {    
             console.log("update document success");
-            console.log(doc);
+            //console.log(doc);
         }
     })
 })
