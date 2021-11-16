@@ -63,6 +63,9 @@ const Score = new mongoose.model('Score', scoreSchema, 'score');
 app.get('/', (req, res)=>{
     res.status(200).render('index', {alert: false});
 })
+app.get('/face', (req, res)=>{
+    res.status(200).sendFile(path.join(__dirname, '/views/face.html'));
+})
 app.get('/about', (req, res)=>{
     res.status(200).sendFile(path.join(__dirname, '/views/about.html'));
 })

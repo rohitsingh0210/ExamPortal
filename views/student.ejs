@@ -43,8 +43,8 @@
                                     <div class="card-body">
                                         <h5 class="card-title"><%= test.testName%></h5>
                                         <p class="card-text">
-                                            <%= test.dateTime.toString().slice(0,28) %>
-                                            Duration : <%= test.testDuration %> min
+                                            <%= new Date(test.dateTime).toString().slice(0,28) %>
+                                            <br>Duration : <%= test.testDuration %> min
                                         </p>
                                         <a id=<%= index%> onclick="return checkTest('<%= test.dateTime%>', '<%=test.testDuration%>')" href="/test?testName=<%=test.testName%>&department=<%=test.department%>&dateTime=<%=test.dateTime%>&testDuration=<%=((test.dateTime)-((new Date())-test.testDuration*60000))%>" class="startBtn btn btn-primary">Start test</a>
                                     </div>
