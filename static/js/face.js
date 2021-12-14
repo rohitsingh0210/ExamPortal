@@ -21,18 +21,53 @@ video.addEventListener('play', () => {
   // document.body.append(canvas)
   const displaySize = { width: video.width, height: video.height }
   faceapi.matchDimensions(canvas, displaySize)
+
+  let count = 0;
+
+  function reset(){
+    count = 0;
+  }
+
   setInterval(async () => {
     const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
-    // console.log("detections "+Objects.keys(detections))
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
-    console.log(resizedDetections.length)
-    if(resizedDetections.length>1){
-      console.log("too many people")
+    
+    let numOfFaces = resizedDetections.length
+    console.log(numOfFaces)
+    if(numOfFaces>1){
+      // console.log("too many people")
+      // nothing()
+      count++;
+      console.log("count "+count)
+      document.getElementById('warning').innerHTML = `<div id="warning" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <center><strong>WARNING</strong> Multiple faces detected. Test will get automatically submitted in ${45-count} seconds.</center>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>`
+      if(count==45){
+        // console.log("too many")
+        end()
+      }
     }
-    else if(resizedDetections.length==0) console.log("no one")
-    // canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
-    // faceapi.draw.drawDetections(canvas, resizedDetections)
-    //  faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
-    // faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
+    else if(numOfFaces==0){
+      count++;
+      console.log("count "+count)
+      document.getElementById('warning').innerHTML = `<div id="warning" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <center><strong>WARNING</strong> No face detected. Test will get automatically submitted in ${45-count} seconds.</center>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>`
+      if(count==45){
+        // console.log("too many")
+        end()
+      }
+    }
+    else {
+      count = 0;
+      document.getElementById('warning').innerHTML = ''
+    }
+      
   }, 1000)
 })

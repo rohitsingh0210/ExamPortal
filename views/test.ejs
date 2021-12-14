@@ -41,6 +41,8 @@
     <h1 id="timeRemaining" class="col-lg-6 col-md-6 col-sm-6 alignRight">Time Left: 00:00:00</h1>
   </div>
 
+  <div id="warning"></div>
+
   <div class="question-container mx-auto">
 
     <h2 id="questionNumber">Question 1</h2>
@@ -151,6 +153,8 @@
         showQuestion(index);
       }
     })
+    
+    function nothing(){console.log("in nothing")}
     // end test
     function end(){
       let marks = 0;
