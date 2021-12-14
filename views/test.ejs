@@ -28,6 +28,9 @@
     integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
     crossorigin="anonymous"></script>
 
+
+    <script defer src="../static/js/face-api.min.js"></script>
+    <script defer src="../static/js/face.js"></script>
 </head>
 
 <body>
@@ -83,9 +86,11 @@
     </div>
   </div>
   <footer id="footer">Copyright &copy; Exam Portal 2021 | TY 81 | All rights reserved</footer>
+  <video id="video" width="192" height="144" autoplay muted></video>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="../static/js/test.js" charset="utf-8"></script>
+
 
   <script>
     let testDuration = <%-testDuration %>;
@@ -99,7 +104,7 @@
         if(hour==0 && minutes==0 && seconds==0){
           end()
         }
-        console.log(hour+':'+minutes+':'+seconds)
+        // console.log(hour+':'+minutes+':'+seconds)
         document.getElementById('timeRemaining').innerText = `Time left : ${hour}:${minutes}:${seconds}`
         testDuration -= 1000;
       },1000)

@@ -13,17 +13,24 @@
       padding: 0;
       width: 100vw;
       height: 100vh;
-      display: flex;
+      /* display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: center; */
     }
 
     canvas {
       position: absolute;
+      bottom: 0;
+    }
+
+    #video{
+      position: absolute;
+      bottom: 0;
+      right: 0;
     }
   </style>
 </head>
 <body>
-  <video id="video" width="720" height="560" autoplay muted></video>
+  <video id="video" width="240" height="180" autoplay muted></video>
 </body>
 </html>
